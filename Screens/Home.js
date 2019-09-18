@@ -41,7 +41,8 @@ export default class Home extends React.Component {
         data : [],
         id : "",
         urutan : 0,
-        kuota : 0
+        kuota : 0,
+        pulsa : 0
     }
 
     
@@ -68,7 +69,19 @@ export default class Home extends React.Component {
         for (let i = 0 ; i < realmSess.realm.objects(realmSess.schemaName).length ; i++){
             jumlah = jumlah + realmSess.realm.objects(realmSess.schemaName)[i].datakuota
         }
-        this.setState({kuota : jumlah})
+        
+
+        let realm = await OpenRealmSess (RealmRefs().Pulsa)
+        let pulsa = 0
+        
+        for (let i = 0; i < realm.realm.objects(realm.schemaName).length ; i++){
+            pulsa = pulsa + realm.realm.objects(realm.schemaName)[i].jumlahpulsa
+        }
+
+        this.setState({
+            kuota : jumlah,
+            pulsa : pulsa
+        })
     }
 
     render() {
@@ -247,7 +260,7 @@ export default class Home extends React.Component {
                                     fontWeight : "bold"
                                 }}
                             >
-                                Rp 300.000
+                                Rp {this.state.pulsa}
                             </Text>
                         </View>
                     </View>

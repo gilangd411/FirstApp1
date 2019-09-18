@@ -2,19 +2,21 @@ import React from "react"
 import {
     View, TouchableOpacity, Image, Text, Dimensions,ScrollView
 }from "react-native"
+import { OpenRealmSess } from "../Realm"
+import { RealmRefs } from "../RealmRefs"
 
 export default class isiPulsa extends React.Component {
     state = {
         data : [],
         id : "",
         menuTampil: true,
-        nominal : "Pilih nominal",
+        nominal : 0,
         harga : "",
         arah : false,
         tempat : [],
         place : "Tempat Pembayaran",
         arrow : false,
-        harga : "harga"
+        harga : ""
     }
     render() {
         return (
@@ -208,7 +210,7 @@ export default class isiPulsa extends React.Component {
                                     fontWeight : "bold"
                                 }}
                             >
-                                Harga :  {this.state.harga}
+                                Harga : Rp {this.state.harga}
                             </Text>
                         </View>
                         <View
@@ -227,16 +229,27 @@ export default class isiPulsa extends React.Component {
                         </View>
                     </View>
                     <TouchableOpacity
+                        onPress = {() => this.Order()}
                         activeOpacity = {0.5}
-                        disabled = {this.state.place == "Tempat Pembayaran" ? false : true}
+                        disabled = {this.state.place == "Tempat Pembayaran" ? true : false}
                         style = {{
                             height : 50,
                             width : 100,
                             borderRadius : 20,
-                            backgroundColor : "mediumaquamarine"
+                            backgroundColor : this.state.place == "Tempat Pembayaran" ? "gray" : "mediumaquamarine",
+                            justifyContent : "center",
+                            alignItems : "center"
                         }}
                     > 
-
+                        <Text
+                            style = {{
+                                fontSize : 25,
+                                fontWeight : "bold",
+                                color : "white"
+                            }}
+                        >
+                            Order
+                        </Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -246,7 +259,7 @@ export default class isiPulsa extends React.Component {
     Mencet () {
         this.setState({arah : true})
     
-        fetch("https://gilangd.000webhostapp.com/Aplikasi1/KuotaPack/pulsa.json")
+        fetch("https://gilangd.000webhostapp.com/Aplikasi1/KuotaPack/pulsa.json?1")
         .then(response => response.json())
         .then(responseJson => {
             this.setState({data : responseJson.data})
@@ -274,5 +287,17 @@ export default class isiPulsa extends React.Component {
             tempat : [],
             arrow : false
         })
+    }
+
+    async Order () {
+        let realmSess = await OpenRealmSess(RealmRefs().Pulsa)
+
+        realmSess.realm.write(() => {
+            realmSess.realm.create(realmSess.schemaName, {
+                jumlahpulsa : this.state.nominal
+            })
+        })
+
+        this.props.navigation.pop()
     }
 }

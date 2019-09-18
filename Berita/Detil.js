@@ -202,13 +202,13 @@ export default class Detil extends React.Component{
 
     async Beli () {
         let realmSess = await OpenRealmSess (RealmRefs().Kuota)
-        // Alert.alert("info", (realmSess.realm == undefined).toString())
+        
         realmSess.realm.write(() => {
             realmSess.realm.create(realmSess.schemaName, {
                 datakuota : this.props.navigation.getParam("item").Jumlah_utama
             })
         })
-        // Alert.alert("info", realmSess.realm.objects.length.toString())
+        
         this.props.navigation.pop()
     }
 }

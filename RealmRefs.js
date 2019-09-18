@@ -7,7 +7,8 @@ export function RealmRefs() {
         Word: { value: "" },
         Profile: {email: "", umur: 0},
         Kuota: {datakuota: 0 },
-        Kritik: {saran : ""}
+        Kritik: {saran : ""},
+        Pulsa: {jumlahpulsa: 0}
     }
 
     return {
@@ -54,6 +55,17 @@ export function RealmRefs() {
                 }]
             },
             InitValue: (params = paramSchemas.Kuota) => params
+        },
+        Pulsa :{
+            parameters: paramSchemas.Pulsa,
+            dataModel:  {
+                path : "pulsa.realm",
+                schema : [{
+                    name : "pulsa_v1",
+                    properties: GetConvertedRealmValueToTypeData(paramSchemas.Pulsa)
+                }]
+            },
+            InitValue: (params = paramSchemas.Pulsa) => params
         },
     }
 }
