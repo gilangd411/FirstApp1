@@ -1,6 +1,6 @@
 import React from "react"
 import {
-    View, TouchableOpacity, Image, Text, ScrollView
+    View, TouchableOpacity, Image, Text, ScrollView,
 }from "react-native"
 import { OpenRealmSess } from "../Realm"
 import { RealmRefs } from "../RealmRefs"
@@ -20,8 +20,8 @@ export default class Inbox extends React.Component {
 
     async reloaddata () {
         let realmSess = await OpenRealmSess (RealmRefs().Kuota)
-
-        this.setState ({data : realmSess.realm.objects(realmSess.schemaName).Kuota})
+        
+        this.setState ({data : realmSess.realm.objects(realmSess.schemaName)})
     }
 
     render() {
@@ -62,7 +62,7 @@ export default class Inbox extends React.Component {
                                     marginVertical: 5,
                                     padding: 20,
                                     borderBottomColor: "lightgray",
-                                    borderBottomWidth: 1
+                                    borderBottomWidth: 1,
                                 }}
                             >
                                 <Text
@@ -70,7 +70,7 @@ export default class Inbox extends React.Component {
                                         fontSize: 16
                                     }}
                                 >
-                                    Paket Internet {item} GB telah di Konfirmasi
+                                    Paket Internet {item.datakuota} GB telah di Konfirmasi
                                 </Text>
                             </View>
                         )
