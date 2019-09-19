@@ -38,7 +38,7 @@ export default class Kuota extends React.Component {
                         onPress = {() => this.props.navigation.pop()}
                     >
                         <Image
-                            source = {require ("../left-arrow.png")}
+                            source = {require ("../Gambar/left-arrow.png")}
                             style = {{
                                 height : 30,
                                 width : 30

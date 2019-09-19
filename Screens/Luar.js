@@ -26,65 +26,54 @@ export default class Luar extends React.Component {
                     flex : 1,
                     alignItems : "center"
                 }}
-            > 
-                <View
-                    style = {{
-                        height : 60,
-                        elevation : 8,
-                        backgroundColor : "white",
-                        paddingHorizontal : 20
-                    }}
-                >
-
-                </View>
+            >
                 <ScrollView>
-                {this.state.data.map ((item, index) => {
-                    return(
-                        <TouchableOpacity
-                            onPress = {() => this.props.navigation.push("IsiBerita", {item : item})}
-                            style={{
-                                flex : 1,
-                                flexDirection: "row",
-                                flexWrap : "wrap",
-                                margin : 10,
-                                backgroundColor : "lightgray",
-                                padding : 10,
-                                borderRadius : 20,
-                                justifyContent : "center",
-                                borderWidth : 1
-                            }}
-                        >
-                            <Image
-                                source= {{uri: item.Pict}}
+                    {this.state.data.map ((item, index) => {
+                        return(
+                            <TouchableOpacity
+                                onPress = {() => this.props.navigation.push("IsiBerita", {item : item})}
                                 style={{
-                                    height: 150,
-                                    width: 300,
-                                    borderRadius : 10
-                                }}
-                            />
-                            <View
-                                style = {{
-                                    backgroundColor : "gainsboro",
-                                    marginTop : 15,
-                                    borderRadius : 10,
-                                    padding : 5
+                                    flex : 1,
+                                    flexDirection: "row",
+                                    flexWrap : "wrap",
+                                    margin : 10,
+                                    backgroundColor : "lightgray",
+                                    padding : 10,
+                                    borderRadius : 20,
+                                    justifyContent : "center",
+                                    borderWidth : 1
                                 }}
                             >
-                                <Text
+                                <Image
+                                    source= {{uri: item.Pict}}
                                     style={{
-                                        fontSize: 18,
-                                        fontWeight : "bold",
+                                        height: 150,
+                                        width: 300,
+                                        borderRadius : 10
+                                    }}
+                                />
+                                <View
+                                    style = {{
+                                        backgroundColor : "gainsboro",
+                                        marginTop : 15,
+                                        borderRadius : 10,
+                                        padding : 5
                                     }}
                                 >
-                                    {item.judul}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                            )
-                        })}
-                </ScrollView>          
+                                    <Text
+                                        style={{
+                                            fontSize: 18,
+                                            fontWeight : "bold",
+                                        }}
+                                    >
+                                        {item.judul}
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                                )
+                            })}
+                    </ScrollView>          
             </View>
-
         )
     }
 }

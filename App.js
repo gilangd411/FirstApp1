@@ -6,15 +6,14 @@ import {
     Image, View, ScrollView
 }from "react-native"
 import Home from "./Screens/Home"
-// import Artikel from "./Screens/Artikel"
 import feedback from "./Screens/Feedback"
 import Inbox from "./Screens/Inbox"
 import Luar from "./Screens/Luar"
 import Dalam from "./Screens/Dalam"
-import IsiBerita from "./Berita/IsiBerita"
-import Kuota from "./Berita/Kuota"
-import Detil from "./Berita/Detil"
-import isiPulsa from "./Berita/isiPulsa"
+import IsiBerita from "./Detail/IsiBerita"
+import Kuota from "./Detail/Kuota"
+import Detil from "./Detail/Detil"
+import isiPulsa from "./Detail/isiPulsa"
 import History from "./Screens/History"
 
 const TabAtas = createMaterialTopTabNavigator (
@@ -32,7 +31,7 @@ const TabBawah = createMaterialTopTabNavigator (
                 tabBarIcon : ({focused,  horizontal, tintColor}) => {
                     return(
                         <Image
-                            source ={focused ? require ("./redHome.png") : require ("./NatHome.png")}
+                            source ={focused ? require ("./Gambar/redHome.png") : require ("./Gambar/NatHome.png")}
                             style = {{
                                 height : 20, 
                                 width : 20,
@@ -48,7 +47,7 @@ const TabBawah = createMaterialTopTabNavigator (
                 tabBarIcon : ({focused,  horizontal, tintColor}) => {
                     return(
                         <Image
-                            source ={focused ? require ("./RedBlog.png") : require ("./blog.png")}
+                            source ={focused ? require ("./Gambar/RedBlog.png") : require ("./Gambar/blog.png")}
                             style = {{
                                 height : 20, 
                                 width : 20,
@@ -64,7 +63,7 @@ const TabBawah = createMaterialTopTabNavigator (
                 tabBarIcon : ({focused,  horizontal, tintColor}) => {
                     return(
                         <Image
-                            source ={focused ? require ("./Redfeedback.png") : require ("./feedback.png")}
+                            source ={focused ? require ("./Gambar/Redfeedback.png") : require ("./Gambar/feedback.png")}
                             style = {{
                                 height : 20, 
                                 width : 20,
@@ -80,7 +79,7 @@ const TabBawah = createMaterialTopTabNavigator (
                 tabBarIcon : ({focused,  horizontal, tintColor}) => {
                     return(
                         <Image
-                            source ={focused ? require ("./Redemail.png") : require ("./email.png")}
+                            source ={focused ? require ("./Gambar/Redemail.png") : require ("./Gambar/email.png")}
                             style = {{
                                 height : 20, 
                                 width : 20,
@@ -117,7 +116,7 @@ export default createAppContainer (createStackNavigator(
        Kuota,
        History,
        isiPulsa,
-       Detil
+       Detil,
     },
     {
         defaultNavigationOptions : {

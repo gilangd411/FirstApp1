@@ -46,15 +46,15 @@ export function RealmRefs() {
             InitValue: (params = paramSchemas.Kuota) => params
         },
         Kritik :{
-            parameters: paramSchemas.Kuota,
+            parameters: paramSchemas.Kritik,
             dataModel:  {
                 path : "kritik.realm",
                 schema : [{
-                    name : "kritik_v1",
-                    properties: GetConvertedRealmValueToTypeData(paramSchemas.Kuota)
+                    name : "kritik_v5",
+                    properties: GetConvertedRealmValueToTypeData(paramSchemas.Kritik)
                 }]
             },
-            InitValue: (params = paramSchemas.Kuota) => params
+            InitValue: (params = paramSchemas.Kritik) => params
         },
         Pulsa :{
             parameters: paramSchemas.Pulsa,

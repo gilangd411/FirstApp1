@@ -39,7 +39,7 @@ export default class isiPulsa extends React.Component {
                         onPress = {() => this.props.navigation.pop()}
                     >
                         <Image
-                            source = {require ("../left-arrow.png")}
+                            source = {require ("../Gambar/left-arrow.png")}
                             style = {{
                                 height : 30,
                                 width : 30
@@ -95,7 +95,7 @@ export default class isiPulsa extends React.Component {
                             {this.state.nominal}
                         </Text>
                         <Image
-                            source = {this.state.arah == true ? require ("../down.png") : require ("../up.png")}
+                            source = {this.state.arah == true ? require ("../Gambar/down.png") : require ("../Gambar/up.png")}
                             style = {{
                                 height : 30,
                                 width : 30
@@ -154,7 +154,7 @@ export default class isiPulsa extends React.Component {
                             {this.state.place}
                         </Text>
                         <Image
-                            source = {this.state.arrow == true ? require ("../down.png") : require ("../up.png")}
+                            source = {this.state.arrow == true ? require ("../Gambar/down.png") : require ("../Gambar/up.png")}
                             style = {{
                                 height : 30,
                                 width : 30

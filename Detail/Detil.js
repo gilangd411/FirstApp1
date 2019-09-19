@@ -25,7 +25,7 @@ class Slot extends React.Component{
                     }}
                 >
                     <Image
-                        source = {require ("../internet.png")}
+                        source = {require ("../Gambar/internet.png")}
                         style={{
                             height: 20,
                             marginRight: 10,
@@ -91,7 +91,7 @@ export default class Detil extends React.Component{
                         onPress= {() => this.props.navigation.pop()}
                     >
                         <Image
-                            source= {require ("../left-arrow.png")}
+                            source= {require ("../Gambar/left-arrow.png")}
                             style={{
                                 height: 35,
                                 width: 35

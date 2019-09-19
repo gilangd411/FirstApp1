@@ -290,7 +290,7 @@ export default class Home extends React.Component {
                             }}
                         >
                             <Image
-                                source = {require ("../buy.png")}
+                                source = {require ("../Gambar/buy.png")}
                                 style = {{
                                     height : 70,
                                     width : 70
@@ -321,7 +321,7 @@ export default class Home extends React.Component {
                             }}
                         >
                             <Image
-                                source = {require ("../mobile.png")}
+                                source = {require ("../Gambar/mobile.png")}
                                 style={{
                                     height: 70,
                                     width: 70

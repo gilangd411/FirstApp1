@@ -1,9 +1,17 @@
 import React from "react"
 import {
-    View, TouchableOpacity, Image, Text, ScrollView, TextInput
+    View, TouchableOpacity, Image, Text, ScrollView, TextInput,Alert
 }from "react-native"
+import { OpenRealmSess } from "../Realm"
+import { RealmRefs } from "../RealmRefs"
 
 export default class Feedback extends React.Component {
+    state = {
+        kritik : "",
+        place : "kritik & saran"
+    }
+
+
     render() {
         return (
             <View
@@ -36,7 +44,8 @@ export default class Feedback extends React.Component {
                     }}
                 >
                     <TextInput
-                        placeholder= {"Kritik & Saran"}
+                        onChangeText = {value => this.setState({kritik : value})}
+                        placeholder= {this.state.place}
                         style={{
                             height: 40,
                             borderRadius: 20,
@@ -54,15 +63,16 @@ export default class Feedback extends React.Component {
                     }}
                 >
                     <TouchableOpacity
-                    activeOpacity= {0.5}
-                        style={{
-                            height: 40,
-                            width: 100,
-                            borderRadius: 20,
-                            alignItems: "center",
-                            justifyContent: "center",
-                            backgroundColor: "limegreen"
-                        }}
+                        onPress = {() => this.SimpanKritik()}
+                        activeOpacity= {0.5}
+                            style={{
+                                height: 40,
+                                width: 100,
+                                borderRadius: 20,
+                                alignItems: "center",
+                                justifyContent: "center",
+                                backgroundColor: "limegreen"
+                            }}
                     >
                             <Text
                             style={{
@@ -100,14 +110,22 @@ export default class Feedback extends React.Component {
                                 fontWeight: "bold"
                             }}
                         >
-                            Sejarah
+                            History
                         </Text>
-
                     </TouchableOpacity>
-
                 </View>
-
             </View>
         )
+    }
+    async SimpanKritik() {
+        let realmSess = await OpenRealmSess(RealmRefs().Kritik)
+
+        realmSess.realm.write(() => {
+            realmSess.realm.create(realmSess.schemaName, {
+                saran : this.state.kritik
+            })
+        })
+
+        this.setState({place : "", kritik : ""})
     }
 }
