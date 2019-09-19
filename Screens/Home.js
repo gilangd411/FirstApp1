@@ -3,7 +3,7 @@ import Carousel, {Pagination} from "react-native-snap-carousel"
 import {
     View, TouchableOpacity, Image, Text, ScrollView, Dimensions, Alert
 }from "react-native"
-import { OpenRealmSess } from "../Realm"
+import { OpenRealmSess, GetRealmObjs } from "../Realm"
 import { RealmRefs } from "../RealmRefs"
 
 class Slotscrol extends React.Component {
@@ -78,9 +78,16 @@ export default class Home extends React.Component {
             pulsa = pulsa + realm.realm.objects(realm.schemaName)[i].jumlahpulsa
         }
 
+        let realmharga = await OpenRealmSess(RealmRefs().harga)
+        let total = 0
+        for (let index in GetRealmObjs(realmharga)){
+            total = total + GetRealmObjs(realmharga)[index].hargaKuota
+        }
+
+
         this.setState({
             kuota : jumlah,
-            pulsa : pulsa
+            pulsa : pulsa - total
         })
     }
 

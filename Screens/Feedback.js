@@ -53,6 +53,7 @@ export default class Feedback extends React.Component {
                             width: "90%",
                             borderWidth: 1
                         }}
+                        value = {this.state.kritik}
                     >
                     </TextInput>
                 </View>
@@ -126,6 +127,7 @@ export default class Feedback extends React.Component {
             })
         })
 
-        this.setState({place : "", kritik : ""})
+        this.setState({kritik : ""})
+        this.props.navigation.push("History")
     }
 }

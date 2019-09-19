@@ -147,10 +147,10 @@ export default class History extends React.Component {
     }
 
     async delete() {
-        let Realm = await OpenRealmSess(RealmRefs().Kritik)
+        let realm = await OpenRealmSess(RealmRefs().Kritik)
 
-        Realm.realm.write(() => {
-            Realm.realm.deleteAll()
+        realm.realm.write(() => {
+            realm.realm.deleteAll()
         })
 
         this.setState({data : realm.realm.objects(realm.schemaName)})

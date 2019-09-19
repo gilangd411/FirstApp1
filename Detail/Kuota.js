@@ -10,7 +10,7 @@ export default class Kuota extends React.Component {
     }
 
     componentDidMount () {
-        fetch ("https://gilangd.000webhostapp.com/Aplikasi1/KuotaPack/KuotaPack.json?4")
+        fetch ("https://gilangd.000webhostapp.com/Aplikasi1/KuotaPack/KuotaPack.json?5")
         .then(response => response.json())
         .then(responseJson => {
             this.setState({data : responseJson.data})

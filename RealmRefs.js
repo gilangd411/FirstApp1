@@ -6,9 +6,10 @@ export function RealmRefs() {
     let paramSchemas = {
         Word: { value: "" },
         Profile: {email: "", umur: 0},
-        Kuota: {datakuota: 0 },
+        Kuota: {datakuota: 0, waktu : 0},
         Kritik: {saran : ""},
-        Pulsa: {jumlahpulsa: 0}
+        Pulsa: {jumlahpulsa: 0, waktu : 0, tempat : ""},
+        harga: {hargaKuota : 0}
     }
 
     return {
@@ -39,7 +40,7 @@ export function RealmRefs() {
             dataModel:  {
                 path : "kuota.realm",
                 schema : [{
-                    name : "kuota_v6",
+                    name : "kuota_v8",
                     properties: GetConvertedRealmValueToTypeData(paramSchemas.Kuota)
                 }]
             },
@@ -61,11 +62,22 @@ export function RealmRefs() {
             dataModel:  {
                 path : "pulsa.realm",
                 schema : [{
-                    name : "pulsa_v1",
+                    name : "pulsa_v8",
                     properties: GetConvertedRealmValueToTypeData(paramSchemas.Pulsa)
                 }]
             },
             InitValue: (params = paramSchemas.Pulsa) => params
+        },
+        harga :{
+            parameters: paramSchemas.harga,
+            dataModel:  {
+                path : "harga.realm",
+                schema : [{
+                    name : "harga_v2",
+                    properties: GetConvertedRealmValueToTypeData(paramSchemas.harga)
+                }]
+            },
+            InitValue: (params = paramSchemas.harga) => params
         },
     }
 }

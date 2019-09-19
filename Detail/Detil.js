@@ -3,7 +3,7 @@ import{
     View, Text, TouchableOpacity, Image, Dimensions, Alert
 }   from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
-import { OpenRealmSess } from "../Realm"
+import { OpenRealmSess, GetRealmObjs } from "../Realm"
 import { RealmRefs } from "../RealmRefs"
 
 class Slot extends React.Component{
@@ -56,7 +56,10 @@ class Slot extends React.Component{
 
 export default class Detil extends React.Component{
     state = {
-        Jumlah : 0
+        Jumlah : 0,
+        pulsaSekarang : 0,
+        hargaKuota : 0,
+        hasil : 0,
     }
 
     async componentDidMount() {
@@ -66,8 +69,22 @@ export default class Detil extends React.Component{
         for (let i = 0 ; i < realmSess.realm.objects.length ; i++){
             jumlah = jumlah + realmSess.realm.objects[i].datakuota
         }
-        Alert.alert ("info", jumlah.toString)
-        this.setState({Jumlah : jumlah})
+        
+
+        let realm = await OpenRealmSess(RealmRefs().Pulsa)
+        let pulsa = 0
+        for (let index in realm.realm.objects(realm.schemaName)){
+            pulsa = pulsa + realm.realm.objects(realm.schemaName)[index].jumlahpulsa
+        }
+
+        let realmharga = await OpenRealmSess(RealmRefs().harga)
+        let total = 0
+
+        for (let index in GetRealmObjs(realmharga)){
+            total = total + GetRealmObjs(realmharga)[index].hargaKuota
+        }
+
+        this.setState({pulsaSekarang : pulsa - total, Jumlah : jumlah, hargaKuota : this.props.navigation.getParam("item").harga})
     }
 
     render() {
@@ -143,9 +160,10 @@ export default class Detil extends React.Component{
                     </View>
                     <View
                         style={{
-                            height: 400,
+                            height: 300,
                             margin: 10,
-                            borderWidth: 1,
+                            borderRightWidth : 1,
+                            borderLeftWidth : 1,
                             padding: 20,
                         }}
                     >
@@ -170,18 +188,51 @@ export default class Detil extends React.Component{
                             detail = {this.props.navigation.getParam("item").Activity}
                         />
                     </View>
+                </ScrollView>
+                <View
+                    style = {{
+                        height : 60,
+                        flexDirection : "row",
+                        alignItems : "center",
+                        justifyContent : "space-between",
+                        paddingHorizontal : 10
+                    }}
+                >
+                    <View
+                        style = {{
+                            height : 60,
+                            width : "50%"
+                        }}
+                    >
+                        <Text
+                            style = {{
+                                fontSize : 18,
+                                fontWeight : "bold"
+                            }}
+                        >
+                            Pulsa : {this.state.pulsaSekarang}
+                        </Text>
+                        <Text
+                            style = {{
+                                fontSize : 18,
+                                fontWeight : "bold",
+                                marginTop : 5
+                            }}
+                        >
+                            Harga : {this.state.hargaKuota}
+                        </Text>
+                    </View>
                     <TouchableOpacity
                         onPress = {() => this.Beli()}
                         activeOpacity= {0.5}
                         style = {{
-                            marginTop : 20,
                             height : 50,
                             backgroundColor : "red",
                             alignItems: "center",
                             justifyContent: "center",
                             borderRadius: 30,
                             alignSelf : "center",
-                            width : Dimensions.get("screen").width -40
+                            width : Dimensions.get("screen").width -200
                         }}
                     >
                         <Text
@@ -193,22 +244,33 @@ export default class Detil extends React.Component{
                         >
                             Konfirmasi
                         </Text>
-
                     </TouchableOpacity>
-                </ScrollView>
+                </View>
             </View>
         )
     }
 
     async Beli () {
-        let realmSess = await OpenRealmSess (RealmRefs().Kuota)
-        
-        realmSess.realm.write(() => {
-            realmSess.realm.create(realmSess.schemaName, {
-                datakuota : this.props.navigation.getParam("item").Jumlah_utama
+        if (this.state.hargaKuota > this.state.pulsaSekarang){
+            Alert.alert("info", "pulsa Kurang")
+        }else {
+            let realmSess = await OpenRealmSess (RealmRefs().Kuota)
+            
+            realmSess.realm.write(() => {
+                realmSess.realm.create(realmSess.schemaName, {
+                    datakuota : this.props.navigation.getParam("item").Jumlah_utama,
+                    waktu : (new Date()).getTime()
+                })
             })
-        })
-        
-        this.props.navigation.pop()
+            let realm = await OpenRealmSess(RealmRefs().harga)
+
+            realm.realm.write (() => {
+                realm.realm.create(realm.schemaName, {
+                    hargaKuota : this.state.hargaKuota
+                })
+            })
+            // Alert.alert("info", (new Date()).getTime().toString())
+            this.props.navigation.navigate("Inbox")
+        }
     }
 }

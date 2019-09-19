@@ -2,7 +2,7 @@ import React from "react"
 import {
     View, TouchableOpacity, Image, Text, ScrollView,
 }from "react-native"
-import { OpenRealmSess } from "../Realm"
+import { OpenRealmSess, GetRealmObjs } from "../Realm"
 import { RealmRefs } from "../RealmRefs"
 
 export default class Inbox extends React.Component {
@@ -20,8 +20,24 @@ export default class Inbox extends React.Component {
 
     async reloaddata () {
         let realmSess = await OpenRealmSess (RealmRefs().Kuota)
+        let data = []
+        for (let index in GetRealmObjs(realmSess)){
+            data.push({
+                info : "Paket Internet "+ GetRealmObjs(realmSess)[index].datakuota.toString() + " GB telah di Konfirmasi",
+                waktu : GetRealmObjs(realmSess)[index].waktu
+            })
+        }
         
-        this.setState ({data : realmSess.realm.objects(realmSess.schemaName)})
+        let realmPulsa = await OpenRealmSess(RealmRefs().Pulsa)
+
+        for (let index in GetRealmObjs(realmPulsa)){
+            data.push ({
+                info : "Selamat Pembelian Pulsa Dengan Nominal Rp " + GetRealmObjs(realmPulsa)[index].jumlahpulsa.toString() +  " Berhasil" + " Dengan Tempat Pembayaran " + GetRealmObjs(realmPulsa)[index].tempat,
+                waktu : GetRealmObjs(realmPulsa)[index].waktu
+            })
+        }
+        data.sort((a,b) => (a.waktu < b.waktu) ? 1 : ((b.waktu < a.waktu)) ? -1 : 0)
+        this.setState ({data : data})
     }
 
     render() {
@@ -70,7 +86,7 @@ export default class Inbox extends React.Component {
                                         fontSize: 16
                                     }}
                                 >
-                                    Paket Internet {item.datakuota} GB telah di Konfirmasi
+                                    {item.info}
                                 </Text>
                             </View>
                         )

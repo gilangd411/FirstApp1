@@ -11,12 +11,11 @@ export default class isiPulsa extends React.Component {
         id : "",
         menuTampil: true,
         nominal : 0,
-        harga : "",
+        harga : 0,
         arah : false,
         tempat : [],
         place : "Tempat Pembayaran",
         arrow : false,
-        harga : ""
     }
     render() {
         return (
@@ -231,12 +230,12 @@ export default class isiPulsa extends React.Component {
                     <TouchableOpacity
                         onPress = {() => this.Order()}
                         activeOpacity = {0.5}
-                        disabled = {this.state.place == "Tempat Pembayaran" ? true : false}
+                        disabled = {this.state.place == "Tempat Pembayaran" || this.state.harga == 0? true : false}
                         style = {{
                             height : 50,
                             width : 100,
                             borderRadius : 20,
-                            backgroundColor : this.state.place == "Tempat Pembayaran" ? "gray" : "mediumaquamarine",
+                            backgroundColor : this.state.place == "Tempat Pembayaran" || this.state.harga == 0? "gray" : "mediumaquamarine",
                             justifyContent : "center",
                             alignItems : "center"
                         }}
@@ -294,10 +293,12 @@ export default class isiPulsa extends React.Component {
 
         realmSess.realm.write(() => {
             realmSess.realm.create(realmSess.schemaName, {
-                jumlahpulsa : this.state.nominal
+                jumlahpulsa : this.state.nominal,
+                waktu : (new Date()).getTime(),
+                tempat : this.state.place
             })
         })
 
-        this.props.navigation.pop()
+        this.props.navigation.navigate("Inbox")
     }
 }
